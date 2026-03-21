@@ -7,6 +7,17 @@
 </head>
 <body>
     <h1>Главная страница</h1>
+    {{ if eq .Name "Bob"}}
+    <span>Ну привет!</span>
+    {{ else }}
+    <span>А ты кто?</span>
+    {{ end }}
+
+    <ul>
+        {{ range .Hobbies }}
+        <li><b>{{ .}}</b></li>
+        {{end}}
+    </ul>
     <p>Пользователь: {{ .Name }}</p>
     <p>Возраст: {{ .Age }}</p>
     <p>Деньги: {{ .Money }}</p>
