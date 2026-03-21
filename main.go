@@ -16,7 +16,7 @@ func (u User) getAllInfo() string {
 
 func home_page(w http.ResponseWriter, r *http.Request){
 	bob := User{name: "Bob", age: 25, money: -50, avg_grades: 4.2, happiness: 0.8 }
-	fmt.Fprintf(w,  bob.getAllInfo)
+	fmt.Fprintf(w, bob.getAllInfo())
 }
 
 func contacts_page(w http.ResponseWriter, r *http.Request){
