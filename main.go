@@ -18,7 +18,7 @@ func (u *User) setNewName(newName string) {
 }
 
 func home_page(w http.ResponseWriter, r *http.Request){
-	// bob := User{name: "Bob", age: 25, money: -50, avg_grades: 4.2, happiness: 0.8 }
+	bob := User{name: "Bob", age: 25, money: -50, avg_grades: 4.2, happiness: 0.8 }
 	// bob.setNewName("Zhan")
 	// fmt.Fprintf(w, bob.getAllInfo())
 	tmpl, _ := template.ParseFiles("templates/home_page.html")
