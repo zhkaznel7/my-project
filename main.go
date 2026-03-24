@@ -2,41 +2,20 @@ package main
 
 import ("fmt"; "net/http"; "html/template")
 
-type User struct{
-	Name string 
-	Age uint16
-	Money int16
-	Avg_grades, Happiness float64
-	Hobbies []string
-}
+func index(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+	t.ExecuteTemplate(w, "index", nil)
+} 
 
-func (u User) getAllInfo() string {
-	return fmt.Sprintf("User name is: %s. He is %d and he has money equal: %d", u.Name, u.Age, u.Money )
-}
-
-func (u *User) setNewName(newName string) {
-	u.Name = newName
-}
-
-func home_page(w http.ResponseWriter, r *http.Request){
-	bob := User{Name: "Bob", Age: 25, Money: -50, Avg_grades: 4.2, Happiness: 0.8, Hobbies: []string{"Football", "Skate", "Dance"}}
-	// bob.setNewName("Zhan")
-	// fmt.Fprintf(w, bob.getAllInfo())
-	tmpl, _ := template.ParseFiles("templates/home_page.html")
-	tmpl.Execute(w, bob)
-}
-
-func contacts_page(w http.ResponseWriter, r *http.Request){
-	fmt.Fprintf(w, "contacts")
-}
-
-func handleRequest(){
-	http.HandleFunc("/", home_page)
-	http.HandleFunc("/contacts/", contacts_page)
+func handleFunc() {
+	http.HandleFune("/", index)
 	http.ListenAndServe(":8080", nil)
-}
+} 
 
 func main(){
 	
-	handleRequest()
+	handleFunc()
 }
