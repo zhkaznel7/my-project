@@ -11,7 +11,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 } 
 
 func handleFunc() {
-	http.HandleFune("/", index)
+	http.HandleFunc("/", index)
 	http.ListenAndServe(":8080", nil)
 } 
 
