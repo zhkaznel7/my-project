@@ -8,6 +8,10 @@ type Article struct {
 	Title, Anons, FullText string
 }
 
+var posts = []Article{
+
+}
+
 func index(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html")
 	if err != nil {
@@ -25,6 +29,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	defer res.Close() // Ресурсты жабуды ұмытпаймыз
+	posts = []Article{}
 
 	for res.Next() {
 		var post Article
@@ -34,10 +39,12 @@ func index(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 		// Айнымалылар fmt.Sprintf-тің тырнақшасынан кейін үтірмен жазылады
-		fmt.Println(fmt.Sprintf("Post: %s with id: %d", post.Title, post.Id ))
+		// fmt.Println(fmt.Sprintf("Post: %s with id: %d", post.Title, post.Id ))
+		posts = append(posts, post)
+
 	}
 
-	t.ExecuteTemplate(w, "index", nil)
+	t.ExecuteTemplate(w, "index", posts)
 } 
 
 func create(w http.ResponseWriter, r *http.Request) {
@@ -71,9 +78,7 @@ func save_article(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 
-
 } 
-
 
 func handleFunc() {
 	http.HandleFunc("/", index)
