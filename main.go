@@ -34,7 +34,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	defer res.Close() // Ресурсты жабуды ұмытпаймыз
+	// defer res.Close() // Ресурсты жабуды ұмытпаймыз
 	posts = []Article{}
 
 	for res.Next() {
@@ -86,21 +86,22 @@ func save_article(w http.ResponseWriter, r *http.Request) {
 
 } 
 
-func show_post(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-    // w.WriteHeader(http.StatusOK)
-    fmt.Fprintf(w, "ID: %v\n", vars["id"])
+// func show_post(w http.ResponseWriter, r *http.Request) {
+// 	vars := mux.Vars(r)
+	
+//     db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/golang")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer db.Close()
 
-	}
-
-
-
+// 	}
 func handleFunc() {
 	rtr := mux.NewRouter()
 	rtr.HandleFunc("/", index).Methods("GET")
 	rtr.HandleFunc("/create/", create).Methods("GET")
 	rtr.HandleFunc("/save_article/", save_article).Methods("POST")
-	rtr.HandleFunc("/post/{id:[0-9]+}", show_post).Methods("GET")
+	// rtr.HandleFunc("/post/{id:[0-9]+}", show_post).Methods("GET")
 
 	http.Handle("/", rtr)
 	http.ListenAndServe(":8080", nil)
